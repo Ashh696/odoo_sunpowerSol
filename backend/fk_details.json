@@ -1,0 +1,1782 @@
+[
+  {
+    "index": 1,
+    "source_table": "audit_logs",
+    "source_column": "user_id",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "audit_logs_user_id_fkey"
+  },
+  {
+    "index": 2,
+    "source_table": "bom_items",
+    "source_column": "bom_template_id",
+    "referenced_table": "bom_templates",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "bom_items_bom_template_id_fkey"
+  },
+  {
+    "index": 3,
+    "source_table": "bom_items",
+    "source_column": "product_id",
+    "referenced_table": "products",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "bom_items_product_id_fkey"
+  },
+  {
+    "index": 4,
+    "source_table": "bom_templates",
+    "source_column": "created_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "bom_templates_created_by_fkey"
+  },
+  {
+    "index": 5,
+    "source_table": "customer_acceptances",
+    "source_column": "customer_id",
+    "referenced_table": "customers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "customer_acceptances_customer_id_fkey"
+  },
+  {
+    "index": 6,
+    "source_table": "customer_acceptances",
+    "source_column": "customer_signature_id",
+    "referenced_table": "file_attachments",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "customer_acceptances_customer_signature_id_fkey"
+  },
+  {
+    "index": 7,
+    "source_table": "customer_acceptances",
+    "source_column": "installation_id",
+    "referenced_table": "installations",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "customer_acceptances_installation_id_fkey"
+  },
+  {
+    "index": 8,
+    "source_table": "customer_acceptances",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "customer_acceptances_project_id_fkey"
+  },
+  {
+    "index": 9,
+    "source_table": "customers",
+    "source_column": "created_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "customers_created_by_fkey"
+  },
+  {
+    "index": 10,
+    "source_table": "customers",
+    "source_column": "user_id",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "customers_user_id_fkey"
+  },
+  {
+    "index": 11,
+    "source_table": "delivery_confirmations",
+    "source_column": "confirmed_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "delivery_confirmations_confirmed_by_fkey"
+  },
+  {
+    "index": 12,
+    "source_table": "delivery_confirmations",
+    "source_column": "dispatch_id",
+    "referenced_table": "dispatches",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "delivery_confirmations_dispatch_id_fkey"
+  },
+  {
+    "index": 13,
+    "source_table": "delivery_confirmations",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "delivery_confirmations_project_id_fkey"
+  },
+  {
+    "index": 14,
+    "source_table": "delivery_confirmations",
+    "source_column": "signature_attachment_id",
+    "referenced_table": "file_attachments",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "delivery_confirmations_signature_attachment_id_fkey"
+  },
+  {
+    "index": 15,
+    "source_table": "departments",
+    "source_column": "manager_id",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "departments_manager_id_fkey"
+  },
+  {
+    "index": 16,
+    "source_table": "dispatch_items",
+    "source_column": "dispatch_id",
+    "referenced_table": "dispatches",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "dispatch_items_dispatch_id_fkey"
+  },
+  {
+    "index": 17,
+    "source_table": "dispatch_items",
+    "source_column": "product_id",
+    "referenced_table": "products",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "dispatch_items_product_id_fkey"
+  },
+  {
+    "index": 18,
+    "source_table": "dispatch_serials",
+    "source_column": "dispatch_item_id",
+    "referenced_table": "dispatch_items",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "dispatch_serials_dispatch_item_id_fkey"
+  },
+  {
+    "index": 19,
+    "source_table": "dispatch_serials",
+    "source_column": "scanned_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "dispatch_serials_scanned_by_fkey"
+  },
+  {
+    "index": 20,
+    "source_table": "dispatch_serials",
+    "source_column": "serial_number_id",
+    "referenced_table": "serial_numbers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "dispatch_serials_serial_number_id_fkey"
+  },
+  {
+    "index": 21,
+    "source_table": "dispatches",
+    "source_column": "dispatched_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "dispatches_dispatched_by_fkey"
+  },
+  {
+    "index": 22,
+    "source_table": "dispatches",
+    "source_column": "order_id",
+    "referenced_table": "orders",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "dispatches_order_id_fkey"
+  },
+  {
+    "index": 23,
+    "source_table": "dispatches",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "dispatches_project_id_fkey"
+  },
+  {
+    "index": 24,
+    "source_table": "employee_certifications",
+    "source_column": "attachment_id",
+    "referenced_table": "file_attachments",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "employee_certifications_attachment_id_fkey"
+  },
+  {
+    "index": 25,
+    "source_table": "employee_certifications",
+    "source_column": "employee_id",
+    "referenced_table": "employees",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "employee_certifications_employee_id_fkey"
+  },
+  {
+    "index": 26,
+    "source_table": "employee_skills",
+    "source_column": "employee_id",
+    "referenced_table": "employees",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "employee_skills_employee_id_fkey"
+  },
+  {
+    "index": 27,
+    "source_table": "employee_skills",
+    "source_column": "skill_id",
+    "referenced_table": "skills",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "employee_skills_skill_id_fkey"
+  },
+  {
+    "index": 28,
+    "source_table": "employee_skills",
+    "source_column": "verified_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "employee_skills_verified_by_fkey"
+  },
+  {
+    "index": 29,
+    "source_table": "employees",
+    "source_column": "department_id",
+    "referenced_table": "departments",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "employees_department_id_fkey"
+  },
+  {
+    "index": 30,
+    "source_table": "employees",
+    "source_column": "user_id",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "employees_user_id_fkey"
+  },
+  {
+    "index": 31,
+    "source_table": "enquiries",
+    "source_column": "assigned_sales_id",
+    "referenced_table": "employees",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "enquiries_assigned_sales_id_fkey"
+  },
+  {
+    "index": 32,
+    "source_table": "enquiries",
+    "source_column": "customer_id",
+    "referenced_table": "customers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "enquiries_customer_id_fkey"
+  },
+  {
+    "index": 33,
+    "source_table": "escalations",
+    "source_column": "escalated_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "escalations_escalated_by_fkey"
+  },
+  {
+    "index": 34,
+    "source_table": "escalations",
+    "source_column": "escalated_to",
+    "referenced_table": "employees",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "escalations_escalated_to_fkey"
+  },
+  {
+    "index": 35,
+    "source_table": "escalations",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "escalations_project_id_fkey"
+  },
+  {
+    "index": 36,
+    "source_table": "escalations",
+    "source_column": "task_id",
+    "referenced_table": "tasks",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "escalations_task_id_fkey"
+  },
+  {
+    "index": 37,
+    "source_table": "expenses",
+    "source_column": "approved_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "expenses_approved_by_fkey"
+  },
+  {
+    "index": 38,
+    "source_table": "expenses",
+    "source_column": "department_id",
+    "referenced_table": "departments",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "expenses_department_id_fkey"
+  },
+  {
+    "index": 39,
+    "source_table": "expenses",
+    "source_column": "employee_id",
+    "referenced_table": "employees",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "expenses_employee_id_fkey"
+  },
+  {
+    "index": 40,
+    "source_table": "expenses",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "expenses_project_id_fkey"
+  },
+  {
+    "index": 41,
+    "source_table": "expenses",
+    "source_column": "receipt_attachment_id",
+    "referenced_table": "file_attachments",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "expenses_receipt_attachment_id_fkey"
+  },
+  {
+    "index": 42,
+    "source_table": "file_attachments",
+    "source_column": "uploaded_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "file_attachments_uploaded_by_fkey"
+  },
+  {
+    "index": 43,
+    "source_table": "followups",
+    "source_column": "conducted_by",
+    "referenced_table": "employees",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "followups_conducted_by_fkey"
+  },
+  {
+    "index": 44,
+    "source_table": "followups",
+    "source_column": "enquiry_id",
+    "referenced_table": "enquiries",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "followups_enquiry_id_fkey"
+  },
+  {
+    "index": 45,
+    "source_table": "goods_receipt_items",
+    "source_column": "goods_receipt_id",
+    "referenced_table": "goods_receipts",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "goods_receipt_items_goods_receipt_id_fkey"
+  },
+  {
+    "index": 46,
+    "source_table": "goods_receipt_items",
+    "source_column": "po_item_id",
+    "referenced_table": "purchase_order_items",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "goods_receipt_items_po_item_id_fkey"
+  },
+  {
+    "index": 47,
+    "source_table": "goods_receipt_items",
+    "source_column": "product_id",
+    "referenced_table": "products",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "goods_receipt_items_product_id_fkey"
+  },
+  {
+    "index": 48,
+    "source_table": "goods_receipts",
+    "source_column": "purchase_order_id",
+    "referenced_table": "purchase_orders",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "goods_receipts_purchase_order_id_fkey"
+  },
+  {
+    "index": 49,
+    "source_table": "goods_receipts",
+    "source_column": "received_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "goods_receipts_received_by_fkey"
+  },
+  {
+    "index": 50,
+    "source_table": "goods_receipts",
+    "source_column": "supplier_id",
+    "referenced_table": "suppliers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "goods_receipts_supplier_id_fkey"
+  },
+  {
+    "index": 51,
+    "source_table": "installation_checklists",
+    "source_column": "installation_id",
+    "referenced_table": "installations",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "installation_checklists_installation_id_fkey"
+  },
+  {
+    "index": 52,
+    "source_table": "installation_checklists",
+    "source_column": "verified_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "installation_checklists_verified_by_fkey"
+  },
+  {
+    "index": 53,
+    "source_table": "installation_photos",
+    "source_column": "attachment_id",
+    "referenced_table": "file_attachments",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "installation_photos_attachment_id_fkey"
+  },
+  {
+    "index": 54,
+    "source_table": "installation_photos",
+    "source_column": "installation_id",
+    "referenced_table": "installations",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "installation_photos_installation_id_fkey"
+  },
+  {
+    "index": 55,
+    "source_table": "installation_schedule_technicians",
+    "source_column": "employee_id",
+    "referenced_table": "employees",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "installation_schedule_technicians_employee_id_fkey"
+  },
+  {
+    "index": 56,
+    "source_table": "installation_schedule_technicians",
+    "source_column": "schedule_id",
+    "referenced_table": "installation_schedules",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "installation_schedule_technicians_schedule_id_fkey"
+  },
+  {
+    "index": 57,
+    "source_table": "installation_schedules",
+    "source_column": "created_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "installation_schedules_created_by_fkey"
+  },
+  {
+    "index": 58,
+    "source_table": "installation_schedules",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "installation_schedules_project_id_fkey"
+  },
+  {
+    "index": 59,
+    "source_table": "installation_tests",
+    "source_column": "installation_id",
+    "referenced_table": "installations",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "installation_tests_installation_id_fkey"
+  },
+  {
+    "index": 60,
+    "source_table": "installation_tests",
+    "source_column": "tested_by",
+    "referenced_table": "employees",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "installation_tests_tested_by_fkey"
+  },
+  {
+    "index": 61,
+    "source_table": "installations",
+    "source_column": "lead_technician_id",
+    "referenced_table": "employees",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "installations_lead_technician_id_fkey"
+  },
+  {
+    "index": 62,
+    "source_table": "installations",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "installations_project_id_fkey"
+  },
+  {
+    "index": 63,
+    "source_table": "installations",
+    "source_column": "schedule_id",
+    "referenced_table": "installation_schedules",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "installations_schedule_id_fkey"
+  },
+  {
+    "index": 64,
+    "source_table": "inventory",
+    "source_column": "product_id",
+    "referenced_table": "products",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "inventory_product_id_fkey"
+  },
+  {
+    "index": 65,
+    "source_table": "invoice_items",
+    "source_column": "invoice_id",
+    "referenced_table": "invoices",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "invoice_items_invoice_id_fkey"
+  },
+  {
+    "index": 66,
+    "source_table": "invoice_items",
+    "source_column": "product_id",
+    "referenced_table": "products",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "invoice_items_product_id_fkey"
+  },
+  {
+    "index": 67,
+    "source_table": "invoices",
+    "source_column": "customer_id",
+    "referenced_table": "customers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "invoices_customer_id_fkey"
+  },
+  {
+    "index": 68,
+    "source_table": "invoices",
+    "source_column": "order_id",
+    "referenced_table": "orders",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "invoices_order_id_fkey"
+  },
+  {
+    "index": 69,
+    "source_table": "invoices",
+    "source_column": "pdf_attachment_id",
+    "referenced_table": "file_attachments",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "invoices_pdf_attachment_id_fkey"
+  },
+  {
+    "index": 70,
+    "source_table": "invoices",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "invoices_project_id_fkey"
+  },
+  {
+    "index": 71,
+    "source_table": "material_consumption",
+    "source_column": "installation_id",
+    "referenced_table": "installations",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "material_consumption_installation_id_fkey"
+  },
+  {
+    "index": 72,
+    "source_table": "material_consumption",
+    "source_column": "product_id",
+    "referenced_table": "products",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "material_consumption_product_id_fkey"
+  },
+  {
+    "index": 73,
+    "source_table": "material_consumption",
+    "source_column": "serial_number_id",
+    "referenced_table": "serial_numbers",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "material_consumption_serial_number_id_fkey"
+  },
+  {
+    "index": 74,
+    "source_table": "notifications",
+    "source_column": "user_id",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "notifications_user_id_fkey"
+  },
+  {
+    "index": 75,
+    "source_table": "orders",
+    "source_column": "created_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "orders_created_by_fkey"
+  },
+  {
+    "index": 76,
+    "source_table": "orders",
+    "source_column": "customer_id",
+    "referenced_table": "customers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "orders_customer_id_fkey"
+  },
+  {
+    "index": 77,
+    "source_table": "orders",
+    "source_column": "quotation_id",
+    "referenced_table": "quotations",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "orders_quotation_id_fkey"
+  },
+  {
+    "index": 78,
+    "source_table": "payment_allocations",
+    "source_column": "invoice_id",
+    "referenced_table": "invoices",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "payment_allocations_invoice_id_fkey"
+  },
+  {
+    "index": 79,
+    "source_table": "payment_allocations",
+    "source_column": "payment_id",
+    "referenced_table": "payments",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "payment_allocations_payment_id_fkey"
+  },
+  {
+    "index": 80,
+    "source_table": "payments",
+    "source_column": "customer_id",
+    "referenced_table": "customers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "payments_customer_id_fkey"
+  },
+  {
+    "index": 81,
+    "source_table": "payments",
+    "source_column": "order_id",
+    "referenced_table": "orders",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "payments_order_id_fkey"
+  },
+  {
+    "index": 82,
+    "source_table": "payments",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "payments_project_id_fkey"
+  },
+  {
+    "index": 83,
+    "source_table": "payments",
+    "source_column": "received_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "payments_received_by_fkey"
+  },
+  {
+    "index": 84,
+    "source_table": "project_bom_items",
+    "source_column": "product_id",
+    "referenced_table": "products",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "project_bom_items_product_id_fkey"
+  },
+  {
+    "index": 85,
+    "source_table": "project_bom_items",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "project_bom_items_project_id_fkey"
+  },
+  {
+    "index": 86,
+    "source_table": "project_costs",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "project_costs_project_id_fkey"
+  },
+  {
+    "index": 87,
+    "source_table": "project_costs",
+    "source_column": "recorded_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "project_costs_recorded_by_fkey"
+  },
+  {
+    "index": 88,
+    "source_table": "project_notes",
+    "source_column": "author_id",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "project_notes_author_id_fkey"
+  },
+  {
+    "index": 89,
+    "source_table": "project_notes",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "project_notes_project_id_fkey"
+  },
+  {
+    "index": 90,
+    "source_table": "projects",
+    "source_column": "customer_id",
+    "referenced_table": "customers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "projects_customer_id_fkey"
+  },
+  {
+    "index": 91,
+    "source_table": "projects",
+    "source_column": "order_id",
+    "referenced_table": "orders",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "projects_order_id_fkey"
+  },
+  {
+    "index": 92,
+    "source_table": "projects",
+    "source_column": "project_manager_id",
+    "referenced_table": "employees",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "projects_project_manager_id_fkey"
+  },
+  {
+    "index": 93,
+    "source_table": "purchase_order_items",
+    "source_column": "product_id",
+    "referenced_table": "products",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "purchase_order_items_product_id_fkey"
+  },
+  {
+    "index": 94,
+    "source_table": "purchase_order_items",
+    "source_column": "purchase_order_id",
+    "referenced_table": "purchase_orders",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "purchase_order_items_purchase_order_id_fkey"
+  },
+  {
+    "index": 95,
+    "source_table": "purchase_orders",
+    "source_column": "created_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "purchase_orders_created_by_fkey"
+  },
+  {
+    "index": 96,
+    "source_table": "purchase_orders",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "purchase_orders_project_id_fkey"
+  },
+  {
+    "index": 97,
+    "source_table": "purchase_orders",
+    "source_column": "supplier_id",
+    "referenced_table": "suppliers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "purchase_orders_supplier_id_fkey"
+  },
+  {
+    "index": 98,
+    "source_table": "quotation_items",
+    "source_column": "product_id",
+    "referenced_table": "products",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "quotation_items_product_id_fkey"
+  },
+  {
+    "index": 99,
+    "source_table": "quotation_items",
+    "source_column": "quotation_id",
+    "referenced_table": "quotations",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "quotation_items_quotation_id_fkey"
+  },
+  {
+    "index": 100,
+    "source_table": "quotation_revisions",
+    "source_column": "quotation_id",
+    "referenced_table": "quotations",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "quotation_revisions_quotation_id_fkey"
+  },
+  {
+    "index": 101,
+    "source_table": "quotation_revisions",
+    "source_column": "revised_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "quotation_revisions_revised_by_fkey"
+  },
+  {
+    "index": 102,
+    "source_table": "quotations",
+    "source_column": "created_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "quotations_created_by_fkey"
+  },
+  {
+    "index": 103,
+    "source_table": "quotations",
+    "source_column": "enquiry_id",
+    "referenced_table": "enquiries",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "quotations_enquiry_id_fkey"
+  },
+  {
+    "index": 104,
+    "source_table": "quotations",
+    "source_column": "survey_id",
+    "referenced_table": "surveys",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "quotations_survey_id_fkey"
+  },
+  {
+    "index": 105,
+    "source_table": "replacements",
+    "source_column": "original_serial_id",
+    "referenced_table": "serial_numbers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "replacements_original_serial_id_fkey"
+  },
+  {
+    "index": 106,
+    "source_table": "replacements",
+    "source_column": "replaced_by",
+    "referenced_table": "employees",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "replacements_replaced_by_fkey"
+  },
+  {
+    "index": 107,
+    "source_table": "replacements",
+    "source_column": "replacement_serial_id",
+    "referenced_table": "serial_numbers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "replacements_replacement_serial_id_fkey"
+  },
+  {
+    "index": 108,
+    "source_table": "replacements",
+    "source_column": "ticket_id",
+    "referenced_table": "service_tickets",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "replacements_ticket_id_fkey"
+  },
+  {
+    "index": 109,
+    "source_table": "role_permissions",
+    "source_column": "permission_id",
+    "referenced_table": "permissions",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "role_permissions_permission_id_fkey"
+  },
+  {
+    "index": 110,
+    "source_table": "role_permissions",
+    "source_column": "role_id",
+    "referenced_table": "roles",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "role_permissions_role_id_fkey"
+  },
+  {
+    "index": 111,
+    "source_table": "serial_number_history",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "serial_number_history_project_id_fkey"
+  },
+  {
+    "index": 112,
+    "source_table": "serial_number_history",
+    "source_column": "recorded_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "serial_number_history_recorded_by_fkey"
+  },
+  {
+    "index": 113,
+    "source_table": "serial_number_history",
+    "source_column": "serial_number_id",
+    "referenced_table": "serial_numbers",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "serial_number_history_serial_number_id_fkey"
+  },
+  {
+    "index": 114,
+    "source_table": "serial_numbers",
+    "source_column": "inventory_id",
+    "referenced_table": "inventory",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "serial_numbers_inventory_id_fkey"
+  },
+  {
+    "index": 115,
+    "source_table": "serial_numbers",
+    "source_column": "product_id",
+    "referenced_table": "products",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "serial_numbers_product_id_fkey"
+  },
+  {
+    "index": 116,
+    "source_table": "serial_numbers",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "serial_numbers_project_id_fkey"
+  },
+  {
+    "index": 117,
+    "source_table": "serial_numbers",
+    "source_column": "purchase_order_id",
+    "referenced_table": "purchase_orders",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "serial_numbers_purchase_order_id_fkey"
+  },
+  {
+    "index": 118,
+    "source_table": "serial_numbers",
+    "source_column": "supplier_id",
+    "referenced_table": "suppliers",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "serial_numbers_supplier_id_fkey"
+  },
+  {
+    "index": 119,
+    "source_table": "service_ticket_confirmations",
+    "source_column": "customer_id",
+    "referenced_table": "customers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "service_ticket_confirmations_customer_id_fkey"
+  },
+  {
+    "index": 120,
+    "source_table": "service_ticket_confirmations",
+    "source_column": "signature_attachment_id",
+    "referenced_table": "file_attachments",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "service_ticket_confirmations_signature_attachment_id_fkey"
+  },
+  {
+    "index": 121,
+    "source_table": "service_ticket_confirmations",
+    "source_column": "ticket_id",
+    "referenced_table": "service_tickets",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "service_ticket_confirmations_ticket_id_fkey"
+  },
+  {
+    "index": 122,
+    "source_table": "service_tickets",
+    "source_column": "created_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "service_tickets_created_by_fkey"
+  },
+  {
+    "index": 123,
+    "source_table": "service_tickets",
+    "source_column": "customer_id",
+    "referenced_table": "customers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "service_tickets_customer_id_fkey"
+  },
+  {
+    "index": 124,
+    "source_table": "service_tickets",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "service_tickets_project_id_fkey"
+  },
+  {
+    "index": 125,
+    "source_table": "service_tickets",
+    "source_column": "serial_number_id",
+    "referenced_table": "serial_numbers",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "service_tickets_serial_number_id_fkey"
+  },
+  {
+    "index": 126,
+    "source_table": "service_tickets",
+    "source_column": "warranty_record_id",
+    "referenced_table": "warranty_records",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "service_tickets_warranty_record_id_fkey"
+  },
+  {
+    "index": 127,
+    "source_table": "service_visits",
+    "source_column": "technician_id",
+    "referenced_table": "employees",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "service_visits_technician_id_fkey"
+  },
+  {
+    "index": 128,
+    "source_table": "service_visits",
+    "source_column": "ticket_id",
+    "referenced_table": "service_tickets",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "service_visits_ticket_id_fkey"
+  },
+  {
+    "index": 129,
+    "source_table": "stock_movements",
+    "source_column": "inventory_id",
+    "referenced_table": "inventory",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "stock_movements_inventory_id_fkey"
+  },
+  {
+    "index": 130,
+    "source_table": "stock_movements",
+    "source_column": "performed_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "stock_movements_performed_by_fkey"
+  },
+  {
+    "index": 131,
+    "source_table": "stock_movements",
+    "source_column": "product_id",
+    "referenced_table": "products",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "stock_movements_product_id_fkey"
+  },
+  {
+    "index": 132,
+    "source_table": "stock_reservations",
+    "source_column": "inventory_id",
+    "referenced_table": "inventory",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "stock_reservations_inventory_id_fkey"
+  },
+  {
+    "index": 133,
+    "source_table": "stock_reservations",
+    "source_column": "product_id",
+    "referenced_table": "products",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "stock_reservations_product_id_fkey"
+  },
+  {
+    "index": 134,
+    "source_table": "stock_reservations",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "stock_reservations_project_id_fkey"
+  },
+  {
+    "index": 135,
+    "source_table": "stock_reservations",
+    "source_column": "reserved_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "stock_reservations_reserved_by_fkey"
+  },
+  {
+    "index": 136,
+    "source_table": "subsidy_applications",
+    "source_column": "created_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "subsidy_applications_created_by_fkey"
+  },
+  {
+    "index": 137,
+    "source_table": "subsidy_applications",
+    "source_column": "customer_id",
+    "referenced_table": "customers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "subsidy_applications_customer_id_fkey"
+  },
+  {
+    "index": 138,
+    "source_table": "subsidy_applications",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "subsidy_applications_project_id_fkey"
+  },
+  {
+    "index": 139,
+    "source_table": "subsidy_documents",
+    "source_column": "attachment_id",
+    "referenced_table": "file_attachments",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "subsidy_documents_attachment_id_fkey"
+  },
+  {
+    "index": 140,
+    "source_table": "subsidy_documents",
+    "source_column": "subsidy_application_id",
+    "referenced_table": "subsidy_applications",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "subsidy_documents_subsidy_application_id_fkey"
+  },
+  {
+    "index": 141,
+    "source_table": "subsidy_documents",
+    "source_column": "verified_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "subsidy_documents_verified_by_fkey"
+  },
+  {
+    "index": 142,
+    "source_table": "subsidy_payments",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "subsidy_payments_project_id_fkey"
+  },
+  {
+    "index": 143,
+    "source_table": "subsidy_payments",
+    "source_column": "subsidy_application_id",
+    "referenced_table": "subsidy_applications",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "subsidy_payments_subsidy_application_id_fkey"
+  },
+  {
+    "index": 144,
+    "source_table": "subsidy_status_history",
+    "source_column": "subsidy_application_id",
+    "referenced_table": "subsidy_applications",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "subsidy_status_history_subsidy_application_id_fkey"
+  },
+  {
+    "index": 145,
+    "source_table": "subsidy_status_history",
+    "source_column": "updated_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "subsidy_status_history_updated_by_fkey"
+  },
+  {
+    "index": 146,
+    "source_table": "supplier_invoices",
+    "source_column": "attachment_id",
+    "referenced_table": "file_attachments",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "supplier_invoices_attachment_id_fkey"
+  },
+  {
+    "index": 147,
+    "source_table": "supplier_invoices",
+    "source_column": "purchase_order_id",
+    "referenced_table": "purchase_orders",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "supplier_invoices_purchase_order_id_fkey"
+  },
+  {
+    "index": 148,
+    "source_table": "supplier_invoices",
+    "source_column": "supplier_id",
+    "referenced_table": "suppliers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "supplier_invoices_supplier_id_fkey"
+  },
+  {
+    "index": 149,
+    "source_table": "supplier_payment_allocations",
+    "source_column": "supplier_invoice_id",
+    "referenced_table": "supplier_invoices",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "supplier_payment_allocations_supplier_invoice_id_fkey"
+  },
+  {
+    "index": 150,
+    "source_table": "supplier_payment_allocations",
+    "source_column": "supplier_payment_id",
+    "referenced_table": "supplier_payments",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "supplier_payment_allocations_supplier_payment_id_fkey"
+  },
+  {
+    "index": 151,
+    "source_table": "supplier_payments",
+    "source_column": "created_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "supplier_payments_created_by_fkey"
+  },
+  {
+    "index": 152,
+    "source_table": "supplier_payments",
+    "source_column": "supplier_id",
+    "referenced_table": "suppliers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "supplier_payments_supplier_id_fkey"
+  },
+  {
+    "index": 153,
+    "source_table": "survey_approvals",
+    "source_column": "reviewer_id",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "survey_approvals_reviewer_id_fkey"
+  },
+  {
+    "index": 154,
+    "source_table": "survey_approvals",
+    "source_column": "survey_id",
+    "referenced_table": "surveys",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "survey_approvals_survey_id_fkey"
+  },
+  {
+    "index": 155,
+    "source_table": "surveys",
+    "source_column": "enquiry_id",
+    "referenced_table": "enquiries",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "surveys_enquiry_id_fkey"
+  },
+  {
+    "index": 156,
+    "source_table": "surveys",
+    "source_column": "surveyor_id",
+    "referenced_table": "employees",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "surveys_surveyor_id_fkey"
+  },
+  {
+    "index": 157,
+    "source_table": "task_assignments",
+    "source_column": "assigned_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "task_assignments_assigned_by_fkey"
+  },
+  {
+    "index": 158,
+    "source_table": "task_assignments",
+    "source_column": "employee_id",
+    "referenced_table": "employees",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "task_assignments_employee_id_fkey"
+  },
+  {
+    "index": 159,
+    "source_table": "task_assignments",
+    "source_column": "task_id",
+    "referenced_table": "tasks",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "task_assignments_task_id_fkey"
+  },
+  {
+    "index": 160,
+    "source_table": "task_history",
+    "source_column": "changed_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "task_history_changed_by_fkey"
+  },
+  {
+    "index": 161,
+    "source_table": "task_history",
+    "source_column": "task_id",
+    "referenced_table": "tasks",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "task_history_task_id_fkey"
+  },
+  {
+    "index": 162,
+    "source_table": "tasks",
+    "source_column": "created_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "tasks_created_by_fkey"
+  },
+  {
+    "index": 163,
+    "source_table": "tasks",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "tasks_project_id_fkey"
+  },
+  {
+    "index": 164,
+    "source_table": "technician_payments",
+    "source_column": "approved_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "technician_payments_approved_by_fkey"
+  },
+  {
+    "index": 165,
+    "source_table": "technician_payments",
+    "source_column": "employee_id",
+    "referenced_table": "employees",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "technician_payments_employee_id_fkey"
+  },
+  {
+    "index": 166,
+    "source_table": "technician_payments",
+    "source_column": "installation_id",
+    "referenced_table": "installations",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "technician_payments_installation_id_fkey"
+  },
+  {
+    "index": 167,
+    "source_table": "technician_worklogs",
+    "source_column": "approved_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "constraint_name": "technician_worklogs_approved_by_fkey"
+  },
+  {
+    "index": 168,
+    "source_table": "technician_worklogs",
+    "source_column": "employee_id",
+    "referenced_table": "employees",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "technician_worklogs_employee_id_fkey"
+  },
+  {
+    "index": 169,
+    "source_table": "technician_worklogs",
+    "source_column": "installation_id",
+    "referenced_table": "installations",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "technician_worklogs_installation_id_fkey"
+  },
+  {
+    "index": 170,
+    "source_table": "users",
+    "source_column": "role_id",
+    "referenced_table": "roles",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "users_role_id_fkey"
+  },
+  {
+    "index": 171,
+    "source_table": "warranty_events",
+    "source_column": "recorded_by",
+    "referenced_table": "users",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "warranty_events_recorded_by_fkey"
+  },
+  {
+    "index": 172,
+    "source_table": "warranty_events",
+    "source_column": "warranty_record_id",
+    "referenced_table": "warranty_records",
+    "referenced_column": "id",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "constraint_name": "warranty_events_warranty_record_id_fkey"
+  },
+  {
+    "index": 173,
+    "source_table": "warranty_policies",
+    "source_column": "product_id",
+    "referenced_table": "products",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "warranty_policies_product_id_fkey"
+  },
+  {
+    "index": 174,
+    "source_table": "warranty_records",
+    "source_column": "customer_id",
+    "referenced_table": "customers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "warranty_records_customer_id_fkey"
+  },
+  {
+    "index": 175,
+    "source_table": "warranty_records",
+    "source_column": "product_id",
+    "referenced_table": "products",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "warranty_records_product_id_fkey"
+  },
+  {
+    "index": 176,
+    "source_table": "warranty_records",
+    "source_column": "project_id",
+    "referenced_table": "projects",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "warranty_records_project_id_fkey"
+  },
+  {
+    "index": 177,
+    "source_table": "warranty_records",
+    "source_column": "serial_number_id",
+    "referenced_table": "serial_numbers",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "warranty_records_serial_number_id_fkey"
+  },
+  {
+    "index": 178,
+    "source_table": "warranty_records",
+    "source_column": "warranty_policy_id",
+    "referenced_table": "warranty_policies",
+    "referenced_column": "id",
+    "on_delete": "RESTRICT",
+    "on_update": "NO ACTION",
+    "constraint_name": "warranty_records_warranty_policy_id_fkey"
+  }
+]
