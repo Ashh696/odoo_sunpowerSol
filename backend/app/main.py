@@ -6,7 +6,14 @@ import os
 from contextlib import asynccontextmanager
 
 from app.config import settings
-from app.routers import health_router, auth_router
+from app.routers import (
+    health_router,
+    auth_router,
+    department_router,
+    skill_router,
+    certification_router,
+    employee_router,
+)
 
 
 @asynccontextmanager
@@ -43,6 +50,11 @@ app.mount("/uploads", StaticFiles(directory=settings.UPLOAD_DIR), name="uploads"
 app.include_router(health_router, prefix=settings.API_V1_STR)
 app.include_router(health_router)  # Also expose /health at root for quick checks
 app.include_router(auth_router, prefix=settings.API_V1_STR)
+app.include_router(department_router, prefix=settings.API_V1_STR)
+app.include_router(skill_router, prefix=settings.API_V1_STR)
+app.include_router(certification_router, prefix=settings.API_V1_STR)
+app.include_router(employee_router, prefix=settings.API_V1_STR)
+
 
 
 @app.get("/")
