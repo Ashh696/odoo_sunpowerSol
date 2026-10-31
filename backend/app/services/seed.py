@@ -1,7 +1,7 @@
 from typing import Dict, List, Tuple
 from sqlalchemy.orm import Session
 from sqlalchemy import select
-from app.models.auth import Role, Permission, RolePermission
+from app.models.auth import Role, Permission, RolePermission, Department, Skill
 from app.utils.roles import SystemRole, ROLE_METADATA
 import logging
 
@@ -16,7 +16,12 @@ DEFINED_PERMISSIONS = [
     ("roles.manage", "auth", "Manage roles and permission allocations"),
     ("employees.read", "auth", "View employee profiles and skills"),
     ("employees.manage", "auth", "Manage employee records, skills and certifications"),
+    ("departments.read", "auth", "View company departments and rosters"),
     ("departments.manage", "auth", "Manage company departments and managers"),
+    ("skills.read", "auth", "View technical skills and catalog"),
+    ("skills.manage", "auth", "Manage technical skills and employee assignments"),
+    ("certifications.read", "auth", "View employee certifications and expiry tracking"),
+    ("certifications.manage", "auth", "Manage employee certifications and verification"),
 
     # Module: crm & sales
     ("customers.read", "crm", "View customer contact and electricity meter details"),
@@ -108,7 +113,8 @@ ROLE_PERMISSION_MATRIX: Dict[str, List[str]] = {
 
     # 2. DIRECTOR: Executive oversight, approvals, financial/operational reporting
     SystemRole.DIRECTOR: [
-        "users.read", "employees.read", "customers.read", "enquiries.read", "surveys.read",
+        "users.read", "employees.read", "departments.read", "skills.read", "certifications.read",
+        "customers.read", "enquiries.read", "surveys.read",
         "quotations.read", "quotations.approve", "orders.read", "projects.read", "bom.read",
         "procurement.read", "inventory.read", "serials.read", "dispatch.read",
         "installations.read", "finance.read", "payments.read", "invoices.read",
@@ -127,6 +133,7 @@ ROLE_PERMISSION_MATRIX: Dict[str, List[str]] = {
 
     # 4. TECHNICAL_MANAGER: Feasibility, survey approvals, BOM, work orders, commissioning
     SystemRole.TECHNICAL_MANAGER: [
+        "employees.read", "departments.read", "skills.read", "skills.manage", "certifications.read", "certifications.manage",
         "customers.read", "enquiries.read", "surveys.read", "surveys.approve",
         "quotations.read", "quotations.approve", "orders.read", "projects.read", "projects.create", "projects.update",
         "bom.read", "bom.manage", "procurement.read", "inventory.read", "serials.read",
@@ -256,16 +263,58 @@ def seed_reference_data(db: Session) -> Dict[str, int]:
                 db.add(mapping)
                 mappings_created += 1
 
+    # 4. Seed Reference Skills (Solar & Technical)
+    STANDARD_SKILLS = [
+        ("Solar Panel Installation", "MOUNTING", "Mounting and structural alignment of photovoltaic solar modules on rooftops"),
+        ("Electrical Wiring", "ELECTRICAL", "AC and DC cable routing, conduit laying, and junction box termination"),
+        ("Inverter Installation", "ELECTRICAL", "String and micro-inverter mounting, grid connection, and anti-islanding setup"),
+        ("Battery Installation", "STORAGE", "Lithium-ion/lead-acid solar battery bank rack setup, BMS calibration, and wiring"),
+        ("Electrical Testing", "TESTING", "Open circuit voltage (Voc), short circuit current (Isc), insulation resistance, and earthing earth-resistance testing"),
+        ("Site Survey", "SURVEY", "Roof structural assessment, azimuth and tilt measurement, shadow profiling, and 3D modeling"),
+        ("System Commissioning", "COMMISSIONING", "Final end-to-end grid synchronization, discom net-metering tests, and customer handoff"),
+        ("Troubleshooting", "MAINTENANCE", "Fault diagnostics, thermal imaging hotspot detection, and degraded panel troubleshooting"),
+        ("Customer Service", "SERVICE", "Customer orientation, mobile app monitoring tutorial, and warranty onboarding"),
+        ("Safety Compliance", "SAFETY", "Fall protection harness usage, working at heights safety, PPE compliance, and OSHA standards"),
+    ]
+    skills_created = 0
+    for s_name, s_cat, s_desc in STANDARD_SKILLS:
+        existing_skill = db.execute(select(Skill).where(Skill.name == s_name)).scalar_one_or_none()
+        if not existing_skill:
+            skill = Skill(name=s_name, category=s_cat, description=s_desc, is_active=True)
+            db.add(skill)
+            skills_created += 1
+
+    # 5. Seed Core Departments
+    CORE_DEPARTMENTS = [
+        ("Engineering & Technical Operations", "TECH"),
+        ("Field Installation & Commissioning", "FIELD"),
+        ("Sales & Customer Relations", "SALES"),
+        ("Warehouse & Procurement", "PROC"),
+        ("Finance & Accounts", "FIN"),
+        ("Service & Warranty Support", "SERV"),
+    ]
+    depts_created = 0
+    for d_name, d_code in CORE_DEPARTMENTS:
+        existing_dept = db.execute(select(Department).where(Department.code == d_code)).scalar_one_or_none()
+        if not existing_dept:
+            dept = Department(name=d_name, code=d_code, is_active=True)
+            db.add(dept)
+            depts_created += 1
+
     db.commit()
     logger.info(
         f"Seeding completed: {roles_created} roles created, "
-        f"{perms_created} permissions created, {mappings_created} mappings created."
+        f"{perms_created} permissions created, {mappings_created} mappings created, "
+        f"{skills_created} skills created, {depts_created} departments created."
     )
 
     return {
         "roles_created": roles_created,
         "permissions_created": perms_created,
         "mappings_created": mappings_created,
+        "skills_created": skills_created,
+        "departments_created": depts_created,
         "total_canonical_roles": len(SystemRole.ALL_ROLES),
         "total_permissions": len(DEFINED_PERMISSIONS),
     }
+

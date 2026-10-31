@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { checkHealth } from './services/api';
+import AuthBar from './components/AuthBar';
+import EmployeeManagementPage from './pages/EmployeeManagementPage';
 import {
   Sun,
   ShieldCheck,
@@ -45,6 +47,17 @@ function Navbar() {
         </div>
 
         <nav className="flex items-center space-x-2">
+          <Link
+            to="/employees"
+            className={`px-3 py-1.5 rounded-md text-sm font-semibold transition flex items-center gap-1.5 ${
+              location.pathname === '/employees' || location.pathname.startsWith('/employees')
+                ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
+                : 'text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30'
+            }`}
+          >
+            <Users className="w-4 h-4" />
+            <span>Employee Management</span>
+          </Link>
           <Link
             to="/"
             className={`px-3 py-1.5 rounded-md text-sm font-medium transition ${
@@ -286,15 +299,17 @@ export default function App() {
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-slate-100/70 flex flex-col">
+        <AuthBar />
         <Navbar />
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Routes>
             <Route path="/" element={<SystemStatusPage />} />
+            <Route path="/employees" element={<EmployeeManagementPage />} />
             <Route path="/architecture" element={<ArchitecturePage />} />
           </Routes>
         </main>
         <footer className="border-t border-slate-200 bg-white py-4 text-center text-xs text-slate-500">
-          SunPower Solutions SIMS • Phase 1 Foundation Active • Ready for Phase 2 Modules
+          SunPower Solutions SIMS • Employee & Department Management Module Active
         </footer>
       </div>
     </BrowserRouter>

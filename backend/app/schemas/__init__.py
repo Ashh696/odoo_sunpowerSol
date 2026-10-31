@@ -33,6 +33,31 @@ from app.schemas.auth import (
     RoleInfo,
     ChangePasswordRequest,
 )
+from app.schemas.department import (
+    DepartmentCreate,
+    DepartmentUpdate,
+    DepartmentResponse,
+    DepartmentDetailResponse,
+)
+from app.schemas.skill import (
+    SkillCreate,
+    SkillUpdate,
+    SkillResponse,
+    EmployeeSkillAssign,
+    EmployeeSkillResponse,
+)
+from app.schemas.certification import (
+    CertificationCreate,
+    CertificationUpdate,
+    CertificationResponse,
+)
+from app.schemas.employee import (
+    EmployeeCreate,
+    EmployeeUpdate,
+    EmployeeStatusUpdate,
+    EmployeeResponse,
+    EmployeeListResponse,
+)
 
 __all__ = [
     "APIResponse",
@@ -43,4 +68,22 @@ __all__ = [
     "UserProfileResponse",
     "RoleInfo",
     "ChangePasswordRequest",
+    "DepartmentCreate",
+    "DepartmentUpdate",
+    "DepartmentResponse",
+    "DepartmentDetailResponse",
+    "SkillCreate",
+    "SkillUpdate",
+    "SkillResponse",
+    "EmployeeSkillAssign",
+    "EmployeeSkillResponse",
+    "CertificationCreate",
+    "CertificationUpdate",
+    "CertificationResponse",
+    "EmployeeCreate",
+    "EmployeeUpdate",
+    "EmployeeStatusUpdate",
+    "EmployeeResponse",
+    "EmployeeListResponse",
 ]
+
