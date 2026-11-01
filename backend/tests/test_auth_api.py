@@ -308,3 +308,80 @@ def test_customer_isolation_and_no_employee_link(setup_test_users):
         assert cust_user.role.slug == SystemRole.CUSTOMER
     finally:
         db.close()
+
+
+def test_customer_self_registration_success():
+    import uuid, random
+    unique_suffix = uuid.uuid4().hex[:8]
+    random_phone = f"+91{random.randint(1000000000, 9999999999)}"
+    payload = {
+        "full_name": "Rooftop Owner Test",
+        "email": f"rooftop_{unique_suffix}@example.com",
+        "phone": random_phone,
+        "password": "SecurePassword123!",
+        "address": "45 Green Energy Road, Solar Nagar",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001",
+    }
+    response = client.post("/api/v1/auth/register", json=payload)
+    assert response.status_code == 201
+    res = response.json()
+    assert res["success"] is True
+    assert "access_token" in res["data"]
+    assert res["data"]["user"]["role"]["slug"] == "CUSTOMER"
+    assert res["data"]["user"]["email"] == payload["email"]
+
+    # Verify user and customer link in database
+    db = SessionLocal()
+    try:
+        from app.models.crm import Customer
+        user = db.execute(select(User).where(User.email == payload["email"])).scalar_one()
+        assert user.role.slug == "CUSTOMER"
+        assert user.employee is None
+
+        cust = db.execute(select(Customer).where(Customer.user_id == user.id)).scalar_one()
+        assert cust.full_name == payload["full_name"]
+        assert cust.phone == payload["phone"]
+        assert cust.address == payload["address"]
+    finally:
+        db.close()
+
+
+def test_customer_registration_duplicate_rejected():
+    import uuid, random
+    unique_suffix = uuid.uuid4().hex[:8]
+    random_phone = f"+91{random.randint(1000000000, 9999999999)}"
+    payload = {
+        "full_name": "Duplicate Tester",
+        "email": f"dup_{unique_suffix}@example.com",
+        "phone": random_phone,
+        "password": "SecurePassword123!",
+    }
+    res1 = client.post("/api/v1/auth/register", json=payload)
+    assert res1.status_code == 201
+
+    res2 = client.post("/api/v1/auth/register", json=payload)
+    assert res2.status_code == 400
+    assert "already exists" in res2.json()["detail"].lower()
+
+
+def test_customer_registration_validation():
+    # Short password
+    res1 = client.post("/api/v1/auth/register", json={
+        "full_name": "Short Pass",
+        "email": "shortpass@example.com",
+        "phone": "+919876543210",
+        "password": "short",
+    })
+    assert res1.status_code in [400, 422]
+
+    # Invalid / short phone
+    res2 = client.post("/api/v1/auth/register", json={
+        "full_name": "Short Phone",
+        "email": "shortphone@example.com",
+        "phone": "123",
+        "password": "ValidPassword123!",
+    })
+    assert res2.status_code in [400, 422]
+

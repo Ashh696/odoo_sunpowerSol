@@ -37,3 +37,14 @@ class TokenResponse(BaseModel):
 class ChangePasswordRequest(BaseModel):
     current_password: str = Field(..., min_length=1)
     new_password: str = Field(..., min_length=8, description="New password, minimum 8 characters")
+
+
+class CustomerRegisterRequest(BaseModel):
+    full_name: str = Field(..., min_length=2, max_length=255, description="Full customer name")
+    email: EmailStr = Field(..., description="Customer email address")
+    phone: str = Field(..., min_length=10, max_length=30, description="Customer phone number")
+    password: str = Field(..., min_length=8, max_length=128, description="Password, minimum 8 characters")
+    address: Optional[str] = Field(None, max_length=500, description="Installation site address")
+    city: Optional[str] = Field("Local", max_length=100, description="City")
+    state: Optional[str] = Field("State", max_length=100, description="State")
+    pincode: Optional[str] = Field("000000", max_length=20, description="Postal pincode")

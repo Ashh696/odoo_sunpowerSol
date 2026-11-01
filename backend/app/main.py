@@ -13,6 +13,24 @@ from app.routers import (
     skill_router,
     certification_router,
     employee_router,
+    customer_router,
+    enquiry_router,
+    followup_router,
+    crm_router,
+    survey_router,
+    product_router,
+    bom_router,
+    quotation_router,
+    order_router,
+    project_router,
+    finance_router,
+    analytics_router,
+    procurement_router,
+    dispatch_router,
+    installation_router,
+    supplier_finance_router,
+    warranty_router,
+    subsidy_router,
 )
 
 
@@ -54,7 +72,24 @@ app.include_router(department_router, prefix=settings.API_V1_STR)
 app.include_router(skill_router, prefix=settings.API_V1_STR)
 app.include_router(certification_router, prefix=settings.API_V1_STR)
 app.include_router(employee_router, prefix=settings.API_V1_STR)
-
+app.include_router(customer_router, prefix=settings.API_V1_STR)
+app.include_router(enquiry_router, prefix=settings.API_V1_STR)
+app.include_router(followup_router, prefix=settings.API_V1_STR)
+app.include_router(crm_router, prefix=settings.API_V1_STR)
+app.include_router(survey_router, prefix=settings.API_V1_STR)
+app.include_router(product_router, prefix=settings.API_V1_STR)
+app.include_router(bom_router, prefix=settings.API_V1_STR)
+app.include_router(quotation_router, prefix=settings.API_V1_STR)
+app.include_router(order_router, prefix=settings.API_V1_STR)
+app.include_router(project_router, prefix=settings.API_V1_STR)
+app.include_router(finance_router, prefix=settings.API_V1_STR)
+app.include_router(analytics_router, prefix=settings.API_V1_STR)
+app.include_router(procurement_router, prefix=settings.API_V1_STR)
+app.include_router(dispatch_router, prefix=settings.API_V1_STR)
+app.include_router(installation_router, prefix=settings.API_V1_STR)
+app.include_router(supplier_finance_router, prefix=settings.API_V1_STR)
+app.include_router(warranty_router, prefix=settings.API_V1_STR)
+app.include_router(subsidy_router, prefix=settings.API_V1_STR)
 
 
 @app.get("/")

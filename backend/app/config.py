@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Union, Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import AnyHttpUrl, field_validator
 import os
@@ -28,6 +28,19 @@ class Settings(BaseSettings):
 
     # CORS
     CORS_ORIGINS: Union[str, List[str]] = ["http://localhost:5173", "http://127.0.0.1:5173"]
+
+    # Company Quotation Profile Configuration (Optional)
+    COMPANY_EMAIL_DOMAIN: str = "sunpower.com"
+    COMPANY_LEGAL_NAME: Optional[str] = None
+    COMPANY_GSTIN: Optional[str] = None
+    COMPANY_ADDRESS: Optional[str] = None
+    COMPANY_PHONE: Optional[str] = None
+    COMPANY_EMAIL: Optional[str] = None
+    COMPANY_BANK_NAME: Optional[str] = None
+    COMPANY_BANK_ACCOUNT_NAME: Optional[str] = None
+    COMPANY_BANK_ACCOUNT_NO: Optional[str] = None
+    COMPANY_BANK_IFSC: Optional[str] = None
+    COMPANY_BANK_BRANCH: Optional[str] = None
 
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod

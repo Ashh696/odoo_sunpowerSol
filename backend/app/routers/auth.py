@@ -1,10 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session, selectinload
-from sqlalchemy import select, func
+from sqlalchemy import select, func, or_
 from datetime import datetime, timezone
+import re
 
 from app.database import get_db
 from app.models.auth import User, Role, RolePermission
+from app.models.crm import Customer
+from app.utils.roles import SystemRole
 from app.schemas import (
     APIResponse,
     LoginRequest,
@@ -12,6 +15,7 @@ from app.schemas import (
     UserProfileResponse,
     RoleInfo,
     ChangePasswordRequest,
+    CustomerRegisterRequest,
 )
 from app.utils.security import (
     verify_password,
@@ -158,4 +162,147 @@ def change_password(
         success=True,
         message="Password updated successfully. Please use your new password for subsequent logins.",
         data={"user_id": current_user.id},
+    )
+
+
+@router.post("/register", response_model=APIResponse[TokenResponse], status_code=status.HTTP_201_CREATED)
+def register_customer(request: CustomerRegisterRequest, db: Session = Depends(get_db)):
+    """
+    Public customer self-registration endpoint.
+    Strictly restricted to registering accounts with the canonical CUSTOMER role.
+    Employee registration is strictly prohibited through this endpoint.
+    """
+    clean_email = str(request.email).lower().strip()
+    clean_phone = request.phone.strip()
+    full_name = request.full_name.strip()
+
+    # Validate phone digit count
+    digits_only = re.sub(r"[^\d]", "", clean_phone)
+    if len(digits_only) < 10:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Mobile phone number must contain at least 10 digits.",
+        )
+
+    # Validate password minimum length
+    if len(request.password) < 8:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Password must be at least 8 characters long.",
+        )
+
+    # Check for existing user account by email or phone
+    existing_user = db.execute(
+        select(User).where(
+            or_(
+                func.lower(User.email) == clean_email,
+                User.phone == clean_phone,
+            )
+        )
+    ).scalars().first()
+
+    if existing_user:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="An account with this email address or phone number already exists. Please sign in.",
+        )
+
+    # Retrieve canonical CUSTOMER role (enforced on backend, client role input is impossible)
+    customer_role = db.execute(
+        select(Role).where(Role.slug == SystemRole.CUSTOMER)
+    ).scalar_one_or_none()
+
+    if not customer_role:
+        logger.error("SystemRole.CUSTOMER is not configured in the database roles table.")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Customer role is not properly configured in the system.",
+        )
+
+    # 1. Create and persist User record
+    new_user = User(
+        role_id=customer_role.id,
+        email=clean_email,
+        phone=clean_phone,
+        full_name=full_name,
+        hashed_password=hash_password(request.password),
+        is_active=True,
+        is_verified=True,
+        last_login_at=datetime.now(timezone.utc),
+    )
+    db.add(new_user)
+    db.flush()  # Obtain new_user.id for customer record foreign key
+
+    # 2. Link existing Customer record or create a new Customer profile
+    existing_customer = db.execute(
+        select(Customer).where(
+            or_(
+                func.lower(Customer.email) == clean_email,
+                Customer.phone == clean_phone,
+            )
+        )
+    ).scalars().first()
+
+    if existing_customer:
+        if existing_customer.user_id and existing_customer.user_id != new_user.id:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="A customer profile with this contact is already linked to another user account.",
+            )
+        existing_customer.user_id = new_user.id
+        if not existing_customer.email:
+            existing_customer.email = clean_email
+        if not existing_customer.full_name:
+            existing_customer.full_name = full_name
+        if request.address and request.address.strip():
+            existing_customer.address = request.address.strip()
+    else:
+        new_customer = Customer(
+            user_id=new_user.id,
+            customer_type="RESIDENTIAL",
+            full_name=full_name,
+            email=clean_email,
+            phone=clean_phone,
+            address=request.address.strip() if request.address and request.address.strip() else "Residential Installation Site",
+            city=request.city.strip() if request.city and request.city.strip() else "Local",
+            state=request.state.strip() if request.state and request.state.strip() else "State",
+            pincode=request.pincode.strip() if request.pincode and request.pincode.strip() else "000000",
+            created_by=new_user.id,
+            is_active=True,
+        )
+        db.add(new_customer)
+
+    db.commit()
+
+    # Load user with role and permissions for token response
+    user_with_role = db.execute(
+        select(User)
+        .where(User.id == new_user.id)
+        .options(
+            selectinload(User.role).selectinload(Role.role_permissions).selectinload(RolePermission.permission)
+        )
+    ).scalar_one()
+
+    # Issue JWT access token
+    token_payload = {
+        "sub": str(new_user.id),
+        "email": new_user.email,
+        "role": SystemRole.CUSTOMER,
+    }
+    access_token = create_access_token(data=token_payload)
+    user_profile = build_user_profile(user_with_role)
+
+    token_data = TokenResponse(
+        access_token=access_token,
+        token_type="bearer",
+        expires_in_minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES,
+        user=user_profile,
+    )
+
+    logger.info(f"New customer registered successfully: user_id={new_user.id}, email={new_user.email}")
+
+    return APIResponse(
+        success=True,
+        message="Customer account registered successfully.",
+        data=token_data,
     )

@@ -27,7 +27,7 @@ from app.schemas.certification import CertificationResponse
 from app.schemas import APIResponse
 from app.dependencies.auth import get_current_user, require_permissions
 from app.utils.roles import SystemRole
-from app.utils.security import hash_password
+from app.utils.security import hash_password, generate_human_friendly_password, generate_unique_work_email
 
 router = APIRouter(prefix="/employees", tags=["Employee Management"])
 
@@ -293,12 +293,22 @@ def create_employee(
         target_user = user
     else:
         # Creating a user record for the employee
-        if not payload.full_name or not payload.email:
+        resolved_full_name = (payload.full_name or "").strip()
+        if not resolved_full_name and (payload.first_name or payload.last_name):
+            resolved_full_name = f"{(payload.first_name or '').strip()} {(payload.last_name or '').strip()}".strip()
+        if not resolved_full_name:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="full_name and email are required when not linking an existing user_id",
+                detail="full_name (or first_name and last_name) is required when not linking an existing user_id",
             )
-        clean_email = payload.email.lower().strip()
+        if payload.email:
+            clean_email = payload.email.lower().strip()
+        else:
+            fn = payload.first_name or (resolved_full_name.split()[0] if resolved_full_name else "")
+            ln = payload.last_name or (resolved_full_name.split()[-1] if len(resolved_full_name.split()) > 1 else "")
+            clean_email = generate_unique_work_email(db, fn, ln)
+
+
 
         # Check unique email
         dup_email = db.execute(select(User).where(User.email == clean_email)).scalar_one_or_none()
@@ -351,7 +361,7 @@ def create_employee(
             role_id=role.id,
             email=clean_email,
             phone=clean_phone,
-            full_name=payload.full_name.strip(),
+            full_name=resolved_full_name,
             hashed_password=hashed,
             is_active=is_active_user,
             is_verified=is_verified,
@@ -396,6 +406,49 @@ def create_employee(
         success=True,
         message=f"Employee '{loaded_emp.employee_code}' created successfully",
         data=_build_employee_response(loaded_emp),
+    )
+
+
+@router.get("/generate-email", response_model=APIResponse[dict])
+def get_generated_work_email(
+    first_name: str = Query(..., min_length=1, max_length=100, description="Employee first name"),
+    last_name: Optional[str] = Query(None, max_length=100, description="Employee last name"),
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_permissions("employees.manage")),
+):
+    """
+    Generate an automatic conflict-free company work email based on employee names.
+    Format: firstname.lastname@companydomain
+    Appends numeric suffix for duplicates (e.g. firstname.lastname2@companydomain).
+    """
+    from app.config import settings
+    email = generate_unique_work_email(db, first_name=first_name, last_name=last_name or "")
+    domain = getattr(settings, "COMPANY_EMAIL_DOMAIN", "sunpower.com")
+    return APIResponse(
+        success=True,
+        message="Generated unique work email address",
+        data={
+            "email": email,
+            "domain": domain,
+            "is_mailbox_provisioned": False,
+            "note": "SIMS authentication and identity address only. External mailboxes are not provisioned.",
+        },
+    )
+
+
+@router.get("/generate-password", response_model=APIResponse[dict])
+def get_generated_password(
+    current_user: User = Depends(require_permissions("employees.manage")),
+):
+    """
+    Generate a human-friendly temporary password for employee account provisioning.
+    Requires employee management privileges (e.g. SUPER_ADMIN).
+    """
+    generated_pwd = generate_human_friendly_password()
+    return APIResponse(
+        success=True,
+        message="Generated temporary password",
+        data={"password": generated_pwd},
     )
 
 

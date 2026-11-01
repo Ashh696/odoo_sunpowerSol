@@ -17,6 +17,8 @@ class EmployeeCreate(BaseModel):
     user_id: Optional[int] = Field(None, description="Link an existing non-customer user")
     # If user_id is not provided, specify user profile fields:
     full_name: Optional[str] = Field(None, max_length=255)
+    first_name: Optional[str] = Field(None, max_length=100)
+    last_name: Optional[str] = Field(None, max_length=100)
     email: Optional[EmailStr] = None
     phone: Optional[str] = Field(None, max_length=30)
     role_slug: Optional[str] = Field("FIELD_TECHNICIAN", description="System role if user account created")

@@ -22,6 +22,16 @@ export const createEmployee = async (data) => {
   return await api.post('/api/v1/employees', data);
 };
 
+export const generateEmployeeEmail = async (firstName, lastName) => {
+  return await api.get('/api/v1/employees/generate-email', {
+    params: { first_name: firstName, last_name: lastName || '' },
+  });
+};
+
+export const generateEmployeePassword = async () => {
+  return await api.get('/api/v1/employees/generate-password');
+};
+
 export const updateEmployee = async (id, data) => {
   return await api.put(`/api/v1/employees/${id}`, data);
 };
